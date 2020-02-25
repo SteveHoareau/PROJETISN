@@ -6,6 +6,8 @@ from pygame.locals import *
 pygame.init()
 fenetre = pygame.display.set_mode((900,428))
 pygame.display.set_caption("Fla-py Bird !")
+#--
+#10/02/2020
 fond = pygame.image.load("images/background.jpg").convert()
 player = pygame.image.load("images/playerbird.png").convert_alpha()
 player_cord = [0,214]
@@ -14,6 +16,8 @@ fenetre.blit(player,(player_cord))
 pygame.display.flip()
 game = 1
 game_statut = False
+#--
+#24/02/2020
 while game:
 	if game_statut == True:
 		fenetre.blit(fond,(0,0))
@@ -41,3 +45,4 @@ while game:
 					y = player_cord[1]-50
 					player_cord = [x,y]
 	pygame.display.flip()
+#--
