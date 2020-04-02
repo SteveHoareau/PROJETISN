@@ -52,6 +52,6 @@ while dictionnaire["game"]:
                 if dictionnaire["player_cord"][0] < 250:
                     avance(dictionnaire,20,0)
                 else:
-                	x = 250 - dictionnaire["player_cord"][0]
+                    x = 250 - dictionnaire["player_cord"][0]
                     avance(dictionnaire,x,-50)
 #--
