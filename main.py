@@ -3,6 +3,16 @@ import time
 import pygame
 from pygame.locals import *
 
+def refresh(dictionnaire):
+	dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
+	pygame.display.flip()
+
+def avance(dictionnaire, a, b):
+	x = dictionnaire["player_cord"][0] +a
+    y = dictionnaire["player_cord"][1] +b
+    dictionnaire["player_cord"] = [x,y]
+    refresh(dictionnaire)
+
 pygame.init()
 fenetre = pygame.display.set_mode((900,428))
 pygame.display.set_caption("Fla-py Bird !")
@@ -14,35 +24,34 @@ player_cord = [0,214]
 fenetre.blit(fond,(0,0))
 fenetre.blit(player,(player_cord))
 pygame.display.flip()
-game = 1
-game_statut = False
+dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre}
 #--
 #24/02/2020
-while game:
-	if game_statut == True:
-		fenetre.blit(fond,(0,0))
-		time.sleep(.1)
-		y = player_cord[1]+6
-		player_cord = [x,y]
-	if player_cord[1] < 1:
-		y = 1
-		player_cord = [x,y]
-		fenetre.blit(player,(player_cord))
-	else:
-		fenetre.blit(player,(player_cord))
-		if player_cord[1] > 389:
-			game= 0
-	for event in pygame.event.get():
-		if event.type == QUIT:
-			game = 0
-		if event.type == KEYDOWN:
-			game_statut = True
-			if event.key == K_SPACE:
-				if player_cord < 250:
-					x = player_cord[0]+20
-				else:
-					x = 250
-					y = player_cord[1]-50
-					player_cord = [x,y]
-	pygame.display.flip()
+while dictionnaire["game"]:
+    if dictionnaire["game_statut"] == True:
+        dictionnaire["fenetre"].blit(fond,(0,0))
+        time.sleep(.1)
+        x = dictionnaire["player_cord"][0]
+        y = dictionnaire["player_cord"][1]+6
+        dictionnaire["player_cord"] = [x,y]
+        dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
+    if dictionnaire["player_cord"][1] < 1:
+        y = 1
+        dictionnaire["player_cord"] = [x,y]
+        dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
+    else:
+        dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
+        if dictionnaire["player_cord"][1] > 389:
+            dictionnaire["game"] = 0
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            dictionnaire["game"] = 0
+        if event.type == KEYDOWN:
+            dictionnaire["game_statut"] = True
+            if event.key == K_SPACE:
+                if dictionnaire["player_cord"][0] < 250:
+                    avance(dictionnaire,20,0)
+                else:
+                	x = 250 - dictionnaire["player_cord"][0]
+                    avance(dictionnaire,x,-50)
 #--
