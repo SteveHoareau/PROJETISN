@@ -27,9 +27,15 @@ def main():
 	#10/02/2020
 	fond = pygame.image.load("images/background.jpg").convert()
 	player = pygame.image.load("images/playerbird.png").convert_alpha()
+	tuyaux_haut = pygame.image.load("images/pipeNorth.png").convert_alpha()
+	tuyaux_bas = pygame.image.load("images/pipeSouth.png").convert_alpha()
+	tuyaux_cord_haut = [425,-100]
+	tuyaux_cord_bas = [425,250]
 	player_cord = [0,214]
 	fenetre.blit(fond,(0,0))
 	fenetre.blit(player,(player_cord))
+	fenetre.blit(tuyaux_haut, (tuyaux_cord_haut))
+	fenetre.blit(tuyaux_bas, (tuyaux_cord_bas))
 	pygame.display.flip()
 	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre}
 	#--
