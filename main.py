@@ -11,12 +11,12 @@ def refresh(dictionnaire):
 	pygame.display.flip()
 
 def avanceTuyaux(dictionnaire):
-	tuyaux_cord_haut = dictionnaire["tuyaux_cord_haut"][1]
-	tuyaux_cord_bas = dictionnaire["tuyaux_cord_bas"][1]
-	tuyaux_cord_haut[0] += 5
-	tuyaux_cord_bas[0] += 5
-	dictionnaire["tuyaux_cord_haut"][1] = tuyaux_cord_haut
-	dictionnaire["tuyaux_cord_bas"][1] = tuyaux_cord_bas
+	tuyaux_cord_haut = dictionnaire["tuyaux_haut"][1]
+	tuyaux_cord_bas = dictionnaire["tuyaux_bas"][1]
+	tuyaux_cord_haut[0] -= 5
+	tuyaux_cord_bas[0] -= 5
+	dictionnaire["tuyaux_haut"][1] = tuyaux_cord_haut
+	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
 
 
@@ -60,6 +60,7 @@ def main():
 			#Si il est dans la fenêtre (en haut)
 			if dictionnaire["player_cord"][1] > 0:
 				avanceOiseau(dictionnaire, [0,5])
+				avanceTuyaux(dictionnaire)
 			#Sinon on le téléporte dans la fenêtre
 			else:
 				setOiseauCord(dictionnaire, [dictionnaire["player_cord"][0],1])
