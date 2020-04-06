@@ -7,11 +7,15 @@ def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
 	pygame.display.flip()
 
-def avance(dictionnaire, cord):
+def avanceOiseau(dictionnaire, cord):
 	player_cord = dictionnaire["player_cord"]
 	player_cord[0] += cord[0]
 	player_cord[1] += cord[1]
 	dictionnaire["player_cord"] = player_cord
+	refresh(dictionnaire)
+
+def setOiseauCord(dictionnaire, cord):
+	dictionnaire["player_cord"] = cord
 	refresh(dictionnaire)
 
 def main():
@@ -30,10 +34,15 @@ def main():
 	#--
 	#24/02/2020
 	while dictionnaire["game"]:
+		#Si le jeu est actif alors
 		if dictionnaire["game_statut"] == True:
 			dictionnaire["fenetre"].blit(fond,(0,0))
 			time.sleep(.1)
-			avance(dictionnaire, [20,0])
+			if dictionnaire["player_cord"][1] < 1:
+				avanceOiseau(dictionnaire, [0,5])
+			else:
+				setOiseauCord(dictionnaire, [getOiseauCord(dictionnaire)[0],1])
+		#Récupération de toute les entrées
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				dictionnaire["game"] = 0
@@ -41,8 +50,8 @@ def main():
 				if event.key == K_SPACE:
 					if dictionnaire["game_statut"] == False:
 						dictionnaire["game_statut"] = True
-						avance(dictionnaire, [20,0])
+						avanceOiseau(dictionnaire, [100,0])
 					else:
-						avance(dictionnaire, [0,20])
+						avanceOiseau(dictionnaire, [0,-20])
 	#--
 main()
