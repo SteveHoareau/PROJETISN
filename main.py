@@ -33,16 +33,7 @@ def main():
 		if dictionnaire["game_statut"] == True:
 			dictionnaire["fenetre"].blit(fond,(0,0))
 			time.sleep(.1)
-			x = dictionnaire["player_cord"][0]
-			y = dictionnaire["player_cord"][1]+6
-			dictionnaire["player_cord"] = [x,y]
-			dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
-		if dictionnaire["player_cord"][1] < 1:
-			y = 1
-			dictionnaire["player_cord"] = [x,y]
-			dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
-		else:
-			dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
+			avance(dictionnaire, [20,0])
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				dictionnaire["game"] = 0
