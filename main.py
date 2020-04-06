@@ -38,10 +38,10 @@ def main():
 		if dictionnaire["game_statut"] == True:
 			dictionnaire["fenetre"].blit(fond,(0,0))
 			time.sleep(.1)
-			if dictionnaire["player_cord"][1] < 1:
+			if dictionnaire["player_cord"][1] > 1:
 				avanceOiseau(dictionnaire, [0,5])
 			else:
-				setOiseauCord(dictionnaire, [getOiseauCord(dictionnaire)[0],1])
+				setOiseauCord(dictionnaire, [dictionnaire["player_cord"][0],1])
 		#Récupération de toute les entrées
 		for event in pygame.event.get():
 			if event.type == QUIT:
