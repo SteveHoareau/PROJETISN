@@ -44,13 +44,15 @@ def main():
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				dictionnaire["game"] = 0
-				if event.type == KEYDOWN:
-					dictionnaire["game_statut"] = True
-					if event.key == K_SPACE:
-						if dictionnaire["player_cord"][0] < 250:
-							avance(dictionnaire)
-						else:
-							x = 250 - dictionnaire["player_cord"][0]
-							avance(dictionnaire)
+			if event.type == KEYDOWN:
+				dictionnaire["game_statut"] = True
+				if event.key == K_SPACE:
+					print("test")
+					if dictionnaire["player_cord"][0] < 250:
+						avance(dictionnaire)
+					else:
+						x = 250 - dictionnaire["player_cord"][0]
+						avance(dictionnaire)
 	#--
 
+main()
