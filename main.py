@@ -10,6 +10,16 @@ def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_bas"][0],(dictionnaire["tuyaux_bas"][1]))
 	pygame.display.flip()
 
+def avanceTuyaux(dictionnaire):
+	tuyaux_cord_haut = dictionnaire["tuyaux_cord_haut"][1]
+	tuyaux_cord_bas = dictionnaire["tuyaux_cord_bas"][1]
+	tuyaux_cord_haut[0] += 5
+	tuyaux_cord_bas[0] += 5
+	dictionnaire["tuyaux_cord_haut"][1] = tuyaux_cord_haut
+	dictionnaire["tuyaux_cord_bas"][1] = tuyaux_cord_bas
+	refresh(dictionnaire)
+
+
 def avanceOiseau(dictionnaire, cord):
 	player_cord = dictionnaire["player_cord"]
 	player_cord[0] += cord[0]
