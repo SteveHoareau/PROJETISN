@@ -6,6 +6,8 @@ from pygame.locals import *
 #Raffraichissement de la fenêtre
 def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
+	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_haut"][0],(dictionnaire["tuyaux_haut"][1]))
+	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_bas"][0],(dictionnaire["tuyaux_bas"][1]))
 	pygame.display.flip()
 
 def avanceOiseau(dictionnaire, cord):
@@ -37,7 +39,7 @@ def main():
 	fenetre.blit(tuyaux_haut, (tuyaux_cord_haut))
 	fenetre.blit(tuyaux_bas, (tuyaux_cord_bas))
 	pygame.display.flip()
-	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":tuyaux_haut,"tuyaux_bas":tuyaux_bas}
+	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord_haut],"tuyaux_bas":[tuyaux_bas,tuyaux_cord_bas]}
 	#--
 	#24/02/2020
 	while dictionnaire["game"]:
