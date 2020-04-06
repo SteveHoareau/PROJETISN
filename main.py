@@ -37,7 +37,7 @@ def main():
 	fenetre.blit(tuyaux_haut, (tuyaux_cord_haut))
 	fenetre.blit(tuyaux_bas, (tuyaux_cord_bas))
 	pygame.display.flip()
-	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre}
+	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":tuyaux_haut,"tuyaux_bas":tuyaux_bas}
 	#--
 	#24/02/2020
 	while dictionnaire["game"]:
