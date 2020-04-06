@@ -7,8 +7,12 @@ def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
 	pygame.display.flip()
 
-def avance(dictionnaire):
+def avance(dictionnaire, (a,b)):
 	player_cord = dictionnaire["player_cord"]
+	player_cord[0] += a
+	player_cord[1] += b
+	dictionnaire["player_cord"] = player_cord
+	refresh(dictionnaire)
 
 def main():
 	pygame.init()
@@ -39,20 +43,15 @@ def main():
 			dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
 		else:
 			dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
-			if dictionnaire["player_cord"][1] > 389:
-				dictionnaire["game"] = 0
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				dictionnaire["game"] = 0
-			if event.type == KEYDOWN:
-				dictionnaire["game_statut"] = True
+			elif event.type == KEYDOWN:
 				if event.key == K_SPACE:
-					print("test")
-					if dictionnaire["player_cord"][0] < 250:
-						avance(dictionnaire)
+					if dictionnaire["game_statut"] == False:
+						dictionnaire["game_statut"] = True
+						avance(dictionnaire, (20,0))
 					else:
-						x = 250 - dictionnaire["player_cord"][0]
-						avance(dictionnaire)
+						avance(dictionnaire, (0,20))
 	#--
-
 main()
