@@ -3,6 +3,7 @@ import time
 import pygame
 from pygame.locals import *
 
+#Raffraichissement de la fenêtre
 def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["player"],(dictionnaire["player_cord"]))
 	pygame.display.flip()
@@ -38,19 +39,25 @@ def main():
 		if dictionnaire["game_statut"] == True:
 			dictionnaire["fenetre"].blit(fond,(0,0))
 			time.sleep(.1)
+			#Si il est dans la fenêtre (en haut)
 			if dictionnaire["player_cord"][1] > 0:
 				avanceOiseau(dictionnaire, [0,5])
+			#Sinon on le téléporte dans la fenêtre
 			else:
 				setOiseauCord(dictionnaire, [dictionnaire["player_cord"][0],1])
+			#Si il n'est pas dans la fenêtre (en bas)
 			if dictionnaire["player_cord"][1] > 388:
+				#Le Jeu s'arrête
 				dictionnaire["game"] = 0
 		#Récupération de toute les entrées
 		for event in pygame.event.get():
 			if event.type == QUIT:
+				#Le Jeu s'arrête
 				dictionnaire["game"] = 0
 			elif event.type == KEYDOWN:
 				if event.key == K_SPACE:
 					if dictionnaire["game_statut"] == False:
+						#Début de la partie
 						dictionnaire["game_statut"] = True
 						avanceOiseau(dictionnaire, [100,0])
 					else:
