@@ -21,14 +21,14 @@ def avanceTuyaux(dictionnaire):
 	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
 
-def hitbox_haut(dictionnaire,points_tuyaux_cord_haut){
+def hitbox_haut(dictionnaire,points_tuyaux_cord_haut):
 	player_cord = dictionnaire["player_cord"]
 	player_cord_x = player_cord[0]
 	player_cord_y = player_cord[1]
 	tuyaux_cord_haut_x = dictionnaire["tuyaux_haut"][1][0]
 	if player_cord_y > points_tuyaux_cord_haut[0]-1 and player_cord_y < points_tuyaux_cord_haut[1]+1:
-
-}
+		if player_cord_x == tuyaux_cord_haut_x:
+			dictionnaire["game"] = 0
 
 #Les tuyaux avancent
 def avanceOiseau(dictionnaire, cord):
@@ -74,6 +74,7 @@ def main():
 			if dictionnaire["player_cord"][1] > 0:
 				avanceOiseau(dictionnaire, [0,5])
 				avanceTuyaux(dictionnaire)
+				hitbox_haut(dictionnaire,points_tuyaux_cord_haut)
 			#Sinon on le téléporte dans la fenêtre
 			else:
 				#[dictionnaire["player_cord"][0],1] = player,player_cord
