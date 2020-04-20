@@ -48,8 +48,8 @@ def main():
 	player_cord = [0,214]
 	fenetre.blit(fond,(0,0))
 	fenetre.blit(player,(player_cord))
-	fenetre.blit(tuyaux_haut, (tuyaux_cord_haut))
-	fenetre.blit(tuyaux_bas, (tuyaux_cord_bas))
+	fenetre.blit(tuyaux_haut, (tuyaux_cord[0]))
+	fenetre.blit(tuyaux_bas, (tuyaux_cord[1]))
 	pygame.display.flip()
 	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord[0]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord[1]]}
 	#--
