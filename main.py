@@ -23,16 +23,17 @@ def avanceTuyaux(dictionnaire):
 
 def hitbox(dictionnaire,points_tuyaux_cord):
 	player_cord = dictionnaire["player_cord"]
+	#player_cord_x = player_cord[0]+ largeur de l'oiseau
 	player_cord_x = player_cord[0]+35
 	player_cord_y = player_cord[1]
 	tuyaux_cord_x = dictionnaire["tuyaux_haut"][1][0]
 	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
 		if player_cord_x == tuyaux_cord_x:
 			dictionnaire["game"] = 0
-	elif player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
-		if player_cord_x == tuyaux_cord_x:
-			dictionnaire["game"] = 0
-
+	#TODO:debug
+	#if player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
+		#if player_cord_x == tuyaux_cord_x:
+			#dictionnaire["game"] = 0
 
 #Les tuyaux avancent
 def avanceOiseau(dictionnaire, cord):
@@ -78,6 +79,7 @@ def main():
 			if dictionnaire["player_cord"][1] > 0:
 				avanceOiseau(dictionnaire, [0,5])
 				avanceTuyaux(dictionnaire)
+				#Lancement de la hitbox, vérification du "cognement contre un tuyaux"
 				hitbox(dictionnaire,points_tuyaux_cord)
 			#Sinon on le téléporte dans la fenêtre
 			else:
