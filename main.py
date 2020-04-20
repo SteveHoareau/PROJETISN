@@ -21,6 +21,15 @@ def avanceTuyaux(dictionnaire):
 	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
 
+def hitbox_haut(dictionnaire,points_tuyaux_cord_haut){
+	player_cord = dictionnaire["player_cord"]
+	player_cord_x = player_cord[0]
+	player_cord_y = player_cord[1]
+	tuyaux_cord_haut_x = dictionnaire["tuyaux_haut"][1][0]
+	if player_cord_y > points_tuyaux_cord_haut[0]-1 and player_cord_y < points_tuyaux_cord_haut[1]+1:
+
+}
+
 #Les tuyaux avancent
 def avanceOiseau(dictionnaire, cord):
 	player_cord = dictionnaire["player_cord"]
@@ -45,6 +54,7 @@ def main():
 	tuyaux_haut = pygame.image.load("images/pipeNorth.png").convert_alpha()
 	tuyaux_bas = pygame.image.load("images/pipeSouth.png").convert_alpha()
 	#tuyaux_cord = [[coordonnées du tuyaux du haut],[coordonnées du tuyaux du bas]]
+	points_tuyaux_cord_haut = [-100,142]
 	tuyaux_cord = {"tuyaux_cord_haut":[425,-100],"tuyaux_cord_bas":[425,250]}
 	player_cord = [0,214]
 	fenetre.blit(fond,(0,0))
@@ -66,6 +76,7 @@ def main():
 				avanceTuyaux(dictionnaire)
 			#Sinon on le téléporte dans la fenêtre
 			else:
+				#[dictionnaire["player_cord"][0],1] = player,player_cord
 				setOiseauCord(dictionnaire, [dictionnaire["player_cord"][0],1])
 			#Si il n'est pas dans la fenêtre (en bas)
 			if dictionnaire["player_cord"][1] > 388:
