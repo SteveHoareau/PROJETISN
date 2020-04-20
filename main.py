@@ -10,6 +10,7 @@ def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_bas"][0],(dictionnaire["tuyaux_bas"][1]))
 	pygame.display.flip()
 
+#L'oiseau avance
 def avanceTuyaux(dictionnaire):
 	tuyaux_cord_haut = dictionnaire["tuyaux_haut"][1]
 	tuyaux_cord_bas = dictionnaire["tuyaux_bas"][1]
@@ -19,7 +20,7 @@ def avanceTuyaux(dictionnaire):
 	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
 
-
+#Les tuyaux avancent
 def avanceOiseau(dictionnaire, cord):
 	player_cord = dictionnaire["player_cord"]
 	player_cord[0] += cord[0]
@@ -27,6 +28,7 @@ def avanceOiseau(dictionnaire, cord):
 	dictionnaire["player_cord"] = player_cord
 	refresh(dictionnaire)
 
+#Téléportation directe de l'oiseau
 def setOiseauCord(dictionnaire, cord):
 	dictionnaire["player_cord"] = cord
 	refresh(dictionnaire)
@@ -57,7 +59,7 @@ def main():
 		if dictionnaire["game_statut"] == True:
 			dictionnaire["fenetre"].blit(fond,(0,0))
 			time.sleep(.1)
-			#Si il est dans la fenêtre (en haut)
+			#Si l'oiseau n'est pas à la valeur maximale de la fenêtre
 			if dictionnaire["player_cord"][1] > 0:
 				avanceOiseau(dictionnaire, [0,5])
 				avanceTuyaux(dictionnaire)
@@ -68,17 +70,21 @@ def main():
 			if dictionnaire["player_cord"][1] > 388:
 				#Le Jeu s'arrête
 				dictionnaire["game"] = 0
-		#Récupération de toute les entrées
+		#Récupération de toute les entrées d'événements liés à pygame
 		for event in pygame.event.get():
+			#Si l'évent est de quitter alors on quitte
 			if event.type == QUIT:
 				#Le Jeu s'arrête
 				dictionnaire["game"] = 0
+			#Sinon si c'est la TOUCHE ESPACE
 			elif event.type == KEYDOWN:
 				if event.key == K_SPACE:
+					#Si le jeu n'est pas actif
 					if dictionnaire["game_statut"] == False:
 						#Début de la partie
 						dictionnaire["game_statut"] = True
 						avanceOiseau(dictionnaire, [100,0])
+					#Sinon
 					else:
 						avanceOiseau(dictionnaire, [0,-20])
 	#--
