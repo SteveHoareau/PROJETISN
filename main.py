@@ -12,6 +12,7 @@ def refresh(dictionnaire):
 
 #L'oiseau avance
 def avanceTuyaux(dictionnaire):
+	#dictionnaire["tuyaux_x"] = [tuyaux_x, tuyaux_cord_x]
 	tuyaux_cord_haut = dictionnaire["tuyaux_haut"][1]
 	tuyaux_cord_bas = dictionnaire["tuyaux_bas"][1]
 	tuyaux_cord_haut[0] -= 5
@@ -44,14 +45,14 @@ def main():
 	tuyaux_haut = pygame.image.load("images/pipeNorth.png").convert_alpha()
 	tuyaux_bas = pygame.image.load("images/pipeSouth.png").convert_alpha()
 	#tuyaux_cord = [[coordonnées du tuyaux du haut],[coordonnées du tuyaux du bas]]
-	tuyaux_cord = {"tuyaux_cord_haut":[425,-100],"tuyaux_cord_haut":[425,250]}
+	tuyaux_cord = {"tuyaux_cord_haut":[425,-100],"tuyaux_cord_bas":[425,250]}
 	player_cord = [0,214]
 	fenetre.blit(fond,(0,0))
 	fenetre.blit(player,(player_cord))
 	fenetre.blit(tuyaux_haut, (tuyaux_cord["tuyaux_cord_haut"]))
 	fenetre.blit(tuyaux_bas, (tuyaux_cord["tuyaux_cord_bas"]))
 	pygame.display.flip()
-	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord["tuyaux_haut"]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord["tuyaux_cord_bas"]]}
+	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord["tuyaux_cord_haut"]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord["tuyaux_cord_bas"]]}
 	#--
 	#24/02/2020
 	while dictionnaire["game"]:
