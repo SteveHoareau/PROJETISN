@@ -10,7 +10,7 @@ def refresh(dictionnaire):
 	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_bas"][0],(dictionnaire["tuyaux_bas"][1]))
 	pygame.display.flip()
 
-#L'oiseau avance
+#Les tuyaux avancent
 def avanceTuyaux(dictionnaire):
 	#dictionnaire["tuyaux_x"] = [tuyaux_x, tuyaux_cord_x]
 	tuyaux_cord_haut = dictionnaire["tuyaux_haut"][1]
@@ -21,20 +21,23 @@ def avanceTuyaux(dictionnaire):
 	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
 
-def hitbox(dictionnaire,points_tuyaux_cord):
+def hitbox(dictionnaire):
 	player_cord = dictionnaire["player_cord"]
 	#player_cord_x = player_cord[0]+ largeur de l'oiseau
 	player_cord_x = player_cord[0]+35
 	player_cord_y = player_cord[1]
 	tuyaux_cord_x = dictionnaire["tuyaux_bas"][1][0]
+	points_tuyaux_cord = dictionnaire["points_tuyaux_cord"]
+	#Hitbox du haut
 	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
-			print("mort par tuyaux du haut")
 			dictionnaire["game"] = 0
 			print("Score final: "+str(dictionnaire["score"]))
 		else:
 			dictionnaire["score"]+=1
 			print("Score: "+str(dictionnaire["score"]))
+			addTuyaux(dictionnaire)
+	#Hitbox du bas
 	elif player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
 			dictionnaire["game"] = 0
@@ -42,8 +45,23 @@ def hitbox(dictionnaire,points_tuyaux_cord):
 		else:
 			dictionnaire["score"]+=1
 			print("Score: "+str(dictionnaire["score"]))
+			addTuyaux(dictionnaire)
 
-#Les tuyaux avancent
+def addTuyaux(dictionnaire):
+	fenetre = dictionnaire["fenetre"]
+	tuyaux_haut = dictionnaire["tuyaux_haut"][0]
+	tuyaux_cord_haut = dictionnaire["tuyaux_haut"][1]
+	fenetre.blit(tuyaux_haut, (tuyaux_cord_haut))
+	tuyaux_bas = dictionnaire["tuyaux_bas"][0]
+	tuyaux_cord_bas = dictionnaire["tuyaux_bas"][1]
+	fenetre.blit(tuyaux_bas, (tuyaux_cord_bas))
+	dictionnaire["tuyaux_haut"] = [tuyaux_haut,tuyaux_cord_haut]
+	dictionnaire["tuyaux_bas"] = [tuyaux_bas,tuyaux_cord_bas]
+	dictionnaire["fenetre"] = fenetre
+	refresh(dictionnaire)
+
+
+#L'oiseau avance
 def avanceOiseau(dictionnaire, cord):
 	player_cord = dictionnaire["player_cord"]
 	player_cord[0] += cord[0]
@@ -67,7 +85,6 @@ def main():
 	tuyaux_haut = pygame.image.load("images/pipeNorth.png").convert_alpha()
 	tuyaux_bas = pygame.image.load("images/pipeSouth.png").convert_alpha()
 	#tuyaux_cord = [[coordonnées du tuyaux du haut],[coordonnées du tuyaux du bas]]
-
 	points_tuyaux_cord = {"tuyaux_cord_haut":[-100,142],"tuyaux_cord_bas":[230,428]}
 	tuyaux_cord = {"tuyaux_cord_haut":[425,-100],"tuyaux_cord_bas":[425,250]}
 	player_cord = [0,214]
@@ -76,7 +93,7 @@ def main():
 	fenetre.blit(tuyaux_haut, (tuyaux_cord["tuyaux_cord_haut"]))
 	fenetre.blit(tuyaux_bas, (tuyaux_cord["tuyaux_cord_bas"]))
 	pygame.display.flip()
-	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord["tuyaux_cord_haut"]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord["tuyaux_cord_bas"]],"score":0}
+	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord["tuyaux_cord_haut"]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord["tuyaux_cord_bas"]],"score":0,"points_tuyaux_cord":points_tuyaux_cord}
 	#--
 	#24/02/2020
 	while dictionnaire["game"]:
@@ -89,7 +106,7 @@ def main():
 				avanceOiseau(dictionnaire, [0,5])
 				avanceTuyaux(dictionnaire)
 				#Lancement de la hitbox, vérification du "cognement contre un tuyaux"
-				hitbox(dictionnaire,points_tuyaux_cord)
+				hitbox(dictionnaire)
 			#Sinon on le téléporte dans la fenêtre
 			else:
 				#[dictionnaire["player_cord"][0],1] = player,player_cord
