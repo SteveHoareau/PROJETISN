@@ -27,17 +27,21 @@ def hitbox(dictionnaire,points_tuyaux_cord):
 	player_cord_x = player_cord[0]+35
 	player_cord_y = player_cord[1]
 	tuyaux_cord_x = dictionnaire["tuyaux_bas"][1][0]
-	if player_cord_x == tuyaux_cord_x:
-		if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
+	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
+		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
 			print("mort par tuyaux du haut")
 			dictionnaire["game"] = 0
-		elif player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
-			print("mort par tuyaux du bas")
-			dictionnaire["game"] = 0
+			print("Score final: "+str(dictionnaire["score"]))
 		else:
 			dictionnaire["score"]+=1
-		print("Score: "+str(dictionnaire["score"]))
-
+			print("Score: "+str(dictionnaire["score"]))
+	elif player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
+		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
+			dictionnaire["game"] = 0
+			print("Score final : "+str(dictionnaire["score"]))
+		else:
+			dictionnaire["score"]+=1
+			print("Score: "+str(dictionnaire["score"]))
 
 #Les tuyaux avancent
 def avanceOiseau(dictionnaire, cord):
@@ -63,7 +67,8 @@ def main():
 	tuyaux_haut = pygame.image.load("images/pipeNorth.png").convert_alpha()
 	tuyaux_bas = pygame.image.load("images/pipeSouth.png").convert_alpha()
 	#tuyaux_cord = [[coordonnées du tuyaux du haut],[coordonnées du tuyaux du bas]]
-	points_tuyaux_cord = {"tuyaux_cord_haut":[-100,142],"tuyaux_cord_bas":[200,428]}
+
+	points_tuyaux_cord = {"tuyaux_cord_haut":[-100,142],"tuyaux_cord_bas":[230,428]}
 	tuyaux_cord = {"tuyaux_cord_haut":[425,-100],"tuyaux_cord_bas":[425,250]}
 	player_cord = [0,214]
 	fenetre.blit(fond,(0,0))
