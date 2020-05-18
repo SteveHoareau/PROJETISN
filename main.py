@@ -28,8 +28,7 @@ def hitbox(dictionnaire):
 	player_cord_y = player_cord[1]
 	tuyaux_cord_x = dictionnaire["tuyaux_bas"][1][0]
 	points_tuyaux_cord = dictionnaire["points_tuyaux_cord"]
-	dictionnaire["verification"] = 0
-	verification = 0
+	verification = dictionnaire["hitbox_verification"]
 	score = dictionnaire["score"]
 	#Hitbox du haut
 	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
@@ -39,17 +38,25 @@ def hitbox(dictionnaire):
 	elif player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
 			end(dictionnaire)
+	#Système de score
 	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][1]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
-			score += 1
 			verification += 1
-			dictionnaire["score"] = score
-			if(verification > 10):
-				addTuyaux(dictionnaire)
-		
+			dictionnaire["hitbox_verification"] = verification
+			#Ajout d'un tuyaux ?
+			if(verification > 9):
+				score += 1
+				dictionnaire["score"] = score
+				if dictionnaire["game"] != 0:
+					print(score)
+					addTuyaux(dictionnaire)
+
+#Ajout d'un tuyaux
 def addTuyaux(dictionnaire):
-	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_haut"][0], ([425,-100]))
-	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_bas"][0], ([425,250]))
+	tuyaux_cord_haut = [425,-100]
+	tuyaux_cord_bas = [425,250]
+	dictionnaire["tuyaux_haut"][1] = tuyaux_cord_haut
+	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
 
 
@@ -68,7 +75,7 @@ def setOiseauCord(dictionnaire, cord):
 
 def end(dictionnaire):
 	dictionnaire["game"] = 0
-	score = int(dictionnaire["score"]/10)
+	score = int(dictionnaire["score"])
 	print("Score final : "+str(score))
 
 def main():
@@ -90,7 +97,7 @@ def main():
 	fenetre.blit(tuyaux_haut, (tuyaux_cord["tuyaux_cord_haut"]))
 	fenetre.blit(tuyaux_bas, (tuyaux_cord["tuyaux_cord_bas"]))
 	pygame.display.flip()
-	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord["tuyaux_cord_haut"]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord["tuyaux_cord_bas"]],"score":0,"points_tuyaux_cord":points_tuyaux_cord}
+	dictionnaire = {"game":1,"game_statut":False,"player":player,"player_cord":player_cord,"fenetre":fenetre,"tuyaux_haut":[tuyaux_haut,tuyaux_cord["tuyaux_cord_haut"]],"tuyaux_bas":[tuyaux_bas,tuyaux_cord["tuyaux_cord_bas"]],"score":0,"points_tuyaux_cord":points_tuyaux_cord,"hitbox_verification":0}
 	#--
 	#24/02/2020
 	while dictionnaire["game"]:
