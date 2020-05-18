@@ -28,36 +28,28 @@ def hitbox(dictionnaire):
 	player_cord_y = player_cord[1]
 	tuyaux_cord_x = dictionnaire["tuyaux_bas"][1][0]
 	points_tuyaux_cord = dictionnaire["points_tuyaux_cord"]
+	dictionnaire["verification"] = 0
+	verification = 0
+	score = dictionnaire["score"]
 	#Hitbox du haut
 	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
-			dictionnaire["game"] = 0
-			print("Score final: "+str(dictionnaire["score"]))
-		else:
-			dictionnaire["score"]+=1
-			print("Score: "+str(dictionnaire["score"]))
-			addTuyaux(dictionnaire)
+			end(dictionnaire)
 	#Hitbox du bas
 	elif player_cord_y > points_tuyaux_cord["tuyaux_cord_bas"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
-			dictionnaire["game"] = 0
-			print("Score final : "+str(dictionnaire["score"]))
-		else:
-			dictionnaire["score"]+=1
-			print("Score: "+str(dictionnaire["score"]))
-			addTuyaux(dictionnaire)
-
+			end(dictionnaire)
+	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][1]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_bas"][1]+1:
+		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
+			score += 1
+			verification += 1
+			dictionnaire["score"] = score
+			if(verification > 10):
+				addTuyaux(dictionnaire)
+		
 def addTuyaux(dictionnaire):
-	fenetre = dictionnaire["fenetre"]
-	tuyaux_haut = dictionnaire["tuyaux_haut"][0]
-	tuyaux_cord_haut = dictionnaire["tuyaux_haut"][1]
-	fenetre.blit(tuyaux_haut, (tuyaux_cord_haut))
-	tuyaux_bas = dictionnaire["tuyaux_bas"][0]
-	tuyaux_cord_bas = dictionnaire["tuyaux_bas"][1]
-	fenetre.blit(tuyaux_bas, (tuyaux_cord_bas))
-	dictionnaire["tuyaux_haut"] = [tuyaux_haut,tuyaux_cord_haut]
-	dictionnaire["tuyaux_bas"] = [tuyaux_bas,tuyaux_cord_bas]
-	dictionnaire["fenetre"] = fenetre
+	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_haut"][0], ([425,-100]))
+	dictionnaire["fenetre"].blit(dictionnaire["tuyaux_bas"][0], ([425,250]))
 	refresh(dictionnaire)
 
 
@@ -73,6 +65,11 @@ def avanceOiseau(dictionnaire, cord):
 def setOiseauCord(dictionnaire, cord):
 	dictionnaire["player_cord"] = cord
 	refresh(dictionnaire)
+
+def end(dictionnaire):
+	dictionnaire["game"] = 0
+	score = int(dictionnaire["score"]/10)
+	print("Score final : "+str(score))
 
 def main():
 	pygame.init()
@@ -114,13 +111,13 @@ def main():
 			#Si il n'est pas dans la fenêtre (en bas)
 			if dictionnaire["player_cord"][1] > 388:
 				#Le Jeu s'arrête
-				dictionnaire["game"] = 0
+				end(dictionnaire)
 		#Récupération de toute les entrées d'événements liés à pygame
 		for event in pygame.event.get():
 			#Si l'évent est de quitter alors on quitte
 			if event.type == QUIT:
 				#Le Jeu s'arrête
-				dictionnaire["game"] = 0
+				end(dictionnaire)
 			#Sinon si c'est la TOUCHE ESPACE
 			elif event.type == KEYDOWN:
 				if event.key == K_SPACE:
