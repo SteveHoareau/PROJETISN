@@ -1,5 +1,6 @@
 #coding: utf-8
 import time
+import random
 import pygame
 from pygame.locals import *
 
@@ -24,12 +25,13 @@ def avanceTuyaux(dictionnaire):
 def hitbox(dictionnaire):
 	player_cord = dictionnaire["player_cord"]
 	#player_cord_x = player_cord[0]+ largeur de l'oiseau
-	player_cord_x = player_cord[0]+35
+	player_cord_x = player_cord[0]+34
 	player_cord_y = player_cord[1]
 	tuyaux_cord_x = dictionnaire["tuyaux_bas"][1][0]
 	points_tuyaux_cord = dictionnaire["points_tuyaux_cord"]
 	verification = dictionnaire["hitbox_verification"]
 	score = dictionnaire["score"]
+	#53 car c'est la largeur d'un tuyau
 	#Hitbox du haut
 	if player_cord_y > points_tuyaux_cord["tuyaux_cord_haut"][0]-1 and player_cord_y < points_tuyaux_cord["tuyaux_cord_haut"][1]+1:
 		if player_cord_x > tuyaux_cord_x-1 and player_cord_x < tuyaux_cord_x+53:
@@ -44,6 +46,7 @@ def hitbox(dictionnaire):
 			verification += 1
 			dictionnaire["hitbox_verification"] = verification
 			#Ajout d'un tuyaux ?
+			#9 car on souhait être à l'entier le plus proche de 10, c'est le nombre de fois qu'on touche 'espace'
 			if(verification > 9):
 				score += 1
 				dictionnaire["score"] = score
@@ -55,6 +58,25 @@ def hitbox(dictionnaire):
 def addTuyaux(dictionnaire):
 	tuyaux_cord_haut = [425,-100]
 	tuyaux_cord_bas = [425,250]
+	#Espace entre les deux tuyaux
+	e_tuyaux = 34
+	#On veut sectionner entre 3 et 8 
+	a = random.randint(3,8)
+	#On veut sectionner aléatoirement vers le haut ou vert le bas
+	b = random.choice(['haut','bas'])
+	#Sectionnage
+	new_e_tuyaux = e_tuyaux/a
+	if b == 'haut':
+		#Car on veut qu'il rentre dans la fenêtre
+		tuyaux_cord_haut[1] -=  new_e_tuyaux*a
+		tuyaux_cord_bas[1] -= new_e_tuyaux*a
+	elif b == 'bas':
+		#Car on veut qu'il rentre dans la fenêtre
+		tuyaux_cord_haut[1] +=  new_e_tuyaux*a
+		tuyaux_cord_bas[1] += new_e_tuyaux*a
+	#Ré-initialisation des variables
+	tuyaux_cord_haut = [425,tuyaux_cord_haut[1]]
+	tuyaux_cord_bas = [425,tuyaux_cord_bas[1]]
 	dictionnaire["tuyaux_haut"][1] = tuyaux_cord_haut
 	dictionnaire["tuyaux_bas"][1] = tuyaux_cord_bas
 	refresh(dictionnaire)
@@ -73,6 +95,7 @@ def setOiseauCord(dictionnaire, cord):
 	dictionnaire["player_cord"] = cord
 	refresh(dictionnaire)
 
+#Fin du jeu
 def end(dictionnaire):
 	dictionnaire["game"] = 0
 	score = int(dictionnaire["score"])
